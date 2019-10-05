@@ -25,6 +25,14 @@ namespace Project_Milestone
         private static void displayMenu()
         {
             Console.WriteLine("Please select one of the following");
+            Console.WriteLine("1) Add A New Expense");
+            Console.WriteLine("2) Show All Expenses");
+            Console.WriteLine("3) Search Item");
+            Console.WriteLine("4) Modify Item");
+            Console.WriteLine("5) Delete Item");
+            Console.WriteLine("6) Sort Items Alphabetically");
+            Console.WriteLine("7) Normalize Descriptions");
+
         }
     }
 }
