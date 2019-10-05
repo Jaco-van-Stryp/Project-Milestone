@@ -28,8 +28,7 @@ namespace Project_Milestone
 
         private static void displayMenu()
         {
-            Console.WriteLine("Enter a date - DEBUG");
-            Console.WriteLine(convertStringToDate(Console.ReadLine()));
+           
             Console.WriteLine("Please select one of the following");
             Console.WriteLine("1) Add A New Expense");
             Console.WriteLine("2) Show All Expenses");
