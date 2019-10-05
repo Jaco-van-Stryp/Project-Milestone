@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Project_Milestone
@@ -27,6 +28,8 @@ namespace Project_Milestone
 
         private static void displayMenu()
         {
+            Console.WriteLine("Enter a date - DEBUG");
+            Console.WriteLine(convertStringToDate(Console.ReadLine()));
             Console.WriteLine("Please select one of the following");
             Console.WriteLine("1) Add A New Expense");
             Console.WriteLine("2) Show All Expenses");
@@ -46,6 +49,7 @@ namespace Project_Milestone
                     addExpense();
                     break;
                 case menu.displayAll:
+                    showAllExpenses();
                     break;
                 case menu.search:
                     break;
@@ -103,7 +107,7 @@ namespace Project_Milestone
 
         }
 
-        public void showAllExpenses()
+        public static void showAllExpenses()
         {
             Console.WriteLine("---------------------------------");
 
@@ -156,14 +160,19 @@ namespace Project_Milestone
 
         public static DateTime convertStringToDate(String date)
         {
-            String appropriateFormat = date[7] + date[6] + "/" + date[5] + date[4] + "/" + date[3] + date[2] + date[1] + date[0];
+
+            String year = date.Substring(0, 4);
+            String month = date.Substring(4, 2);
+            String day = date.Substring(6, 2);
+            Console.WriteLine(day + "/" + month + "/" + year);
             DateTime newDate = new DateTime();
-            newDate = Convert.ToDateTime(appropriateFormat);
+            DateTime dt = DateTime.ParseExact(day + "/" + month + "/" + year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             return newDate;
         }
         public static string get2Decimal(String input)
         {
             char[] sInput = input.ToCharArray();
+            bool hasDec = false;
             String smartS = "";
             for (int i = 0; i < sInput.Length; i++)
             {
@@ -173,13 +182,17 @@ namespace Project_Milestone
                     smartS += sInput[i + 1];
                     smartS += sInput[i + 2];
                     smartS += sInput[i + 3];
-
+                    hasDec = true;
                     break;
                 }
                 else
                 {
                     smartS += sInput[i];
                 }
+            }
+            if(hasDec == false)
+            {
+                smartS += ".00";
             }
             return smartS;
         }
