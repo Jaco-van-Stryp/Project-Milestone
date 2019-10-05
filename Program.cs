@@ -18,7 +18,7 @@ namespace Project_Milestone
         }
 
         //Fixed Array of 10'000 Entries
-       static String[] expenses = new string[10000];
+        static String[] expenses = new string[10000];
 
         static void Main(string[] args)
         {
@@ -78,10 +78,10 @@ namespace Project_Milestone
             }
             else
             {
-               
+
                 for (int i = curTotal; i < curTotal + totalEntries; i++)
                 {
-                    Console.WriteLine("Adding Entry #" + (i + 1)+ " Into The List");
+                    Console.WriteLine("Adding Entry #" + (i + 1) + " Into The List");
                     String date = "";
                     while (date.Length != 8) //validating the length of 8
                     {
@@ -101,6 +101,87 @@ namespace Project_Milestone
             Console.WriteLine("---------------------------------");
 
 
+        }
+
+        public void showAllExpenses()
+        {
+            Console.WriteLine("---------------------------------");
+
+
+            Console.WriteLine("Before we can display your expenses, Please enter a category");
+            String category = Console.ReadLine();
+            Console.WriteLine("Please enter a start date to display from in format YYYYMMDD");
+            String startDate = Console.ReadLine();
+            Console.WriteLine("Please enter a end date to display from in format YYYYMMDD");
+            String endDate = Console.ReadLine();
+
+            DateTime start = new DateTime();
+            start = convertStringToDate(startDate);
+            DateTime end = new DateTime();
+            end = convertStringToDate(endDate);
+            DateTime listed = new DateTime();
+
+            int curTotal = expenses.Count(s => s != null);//tptal valid entries in array
+
+            for (int i = 0; i < curTotal; i++)
+            {
+                String[] shortData = expenses[i].Split("☺");
+                //[0] would be Date
+                //[1] would be Description
+                //[2] would be Category
+                //[3] would be Amount
+                if (category.ToLower().Equals(shortData[2]))
+                {
+                    listed = convertStringToDate(shortData[0]);
+                    if (listed >= start && listed <= end)
+                    {
+                        Console.WriteLine("\n");
+                        Console.WriteLine("Date - " + convertStringToDate(shortData[0]));
+                        Console.WriteLine("Description - " + shortData[1]);
+                        Console.WriteLine("Category - " + shortData[2]);
+                        Console.WriteLine("Amount - " + get2Decimal(shortData[3]));
+
+                        Console.WriteLine("\n");
+
+                    }
+
+
+                }
+            }
+
+
+            Console.WriteLine("---------------------------------");
+
+        }
+
+        public static DateTime convertStringToDate(String date)
+        {
+            String appropriateFormat = date[7] + date[6] + "/" + date[5] + date[4] + "/" + date[3] + date[2] + date[1] + date[0];
+            DateTime newDate = new DateTime();
+            newDate = Convert.ToDateTime(appropriateFormat);
+            return newDate;
+        }
+        public static string get2Decimal(String input)
+        {
+            char[] sInput = input.ToCharArray();
+            String smartS = "";
+            for (int i = 0; i < sInput.Length; i++)
+            {
+                if (sInput[i] == '.' || sInput[i] == ',')
+                {
+                    smartS += sInput[i];
+                    smartS += sInput[i + 1];
+                    smartS += sInput[i + 2];
+                    smartS += sInput[i + 3];
+
+                    break;
+                }
+                else
+                {
+                    smartS += sInput[i];
+                }
+            }
+            return smartS;
         }
     }
 }
