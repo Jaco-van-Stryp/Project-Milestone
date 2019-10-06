@@ -103,7 +103,7 @@ namespace Project_Milestone
                     String date = "";
                     while (date.Length != 8) //validating the length of 8
                     {
-                        Console.WriteLine("Please enter the purchase date in format YYYYMMDD (8 Charaacters)");
+                        Console.WriteLine("Please enter the purchase date in format YYYYMMDD (8 Characters)");
                         date = Console.ReadLine();
                     }
                     Console.WriteLine("Please enter the Description of the Expenditure or Item");
@@ -205,8 +205,16 @@ namespace Project_Milestone
                     found = true;
                     Console.WriteLine("\n");
                     Console.WriteLine("Item Number - " + (i + 1));
-                    Console.WriteLine("Date Of Purchase - " + (arrayData[0]));
-                    Console.WriteLine("Description - " + arrayData[1]); //TODO - Display in sixth truncated blank, if any spaces six or more
+                    Console.WriteLine("Date Of Purchase - " + formatDateString(arrayData[0]));
+                    String[] truncated = arrayData[1].Split(" ");
+                    if (truncated.Length > 6)
+                    {
+                        Console.WriteLine("Description - " + truncated[0] + " " + truncated[1] + " " + truncated[2] + " " + truncated[3] + " " + truncated[4] + " " + truncated[5] + "..."); 
+                    }
+                    else
+                    {
+                        Console.WriteLine("Description - " + arrayData[1]); 
+                    }
                 }
             }
             if (found == false)
@@ -250,7 +258,7 @@ namespace Project_Milestone
                 String date = "";
                 while (date.Length != 8) //validating the length of 8
                 {
-                    Console.WriteLine("Please enter the purchase date in format YYYYMMDD (8 Charaacters)");
+                    Console.WriteLine("Please enter the purchase date in format YYYYMMDD (8 Characters)");
                     date = Console.ReadLine();
                 }
                 Console.WriteLine("Please enter the Description of the Expenditure or Item");
