@@ -68,9 +68,10 @@ namespace Project_Milestone
                     deleteItem();
                     break;
                 case menu.sort:
-                    sort();
+                    expenses = sort(expenses);
                     break;
                 case menu.normalize:
+                    normalizeDesctiptions();
                     break;
                 default:
                     Console.WriteLine("Unkown Input, Please Try Again");
@@ -334,6 +335,23 @@ namespace Project_Milestone
 
             return input;
         }
+
+        public static void normalizeDesctiptions()
+        {
+            Console.WriteLine("Normalising...");
+            for (int i = 0; i < getCurTotal(); i++)
+            {
+                String[] split = expenses[i].Split("☺");
+                String description = split[1];
+                description = description.Trim(); //removing trail spaces
+                description = description.ToLower();
+                description = description[0].ToString().ToUpper() + description.Substring(2, description.Length-1);
+                expenses[i] = split[0] + "☺" + description + "☺" + split[2] + "☺" + split[3];
+            }
+            Console.WriteLine("Done Normalising");
+
+        }
+
 
         //extra methods to help with existing methods
         public static DateTime convertStringToDate(String date)
