@@ -17,6 +17,8 @@ namespace Project_Milestone
             sort,
             normalize,
         }
+        
+
 
         //Fixed Array of 10'000 Entries
         static String[] expenses = new string[10000];
@@ -51,6 +53,7 @@ namespace Project_Milestone
                     showAllExpenses();
                     break;
                 case menu.search:
+                    searchItem();
                     break;
                 case menu.modify:
                     break;
@@ -70,7 +73,7 @@ namespace Project_Milestone
         public static void addExpense()
         {
             int totalLeft = 10000 - expenses.Count(s => s != null);
-            int curTotal = expenses.Count(s => s != null);
+            int curTotal = getCurTotal();
             Console.WriteLine("---------------------------------");
 
             Console.WriteLine("Let's add a new expense!\nHow many entries do you want to add?");
@@ -124,7 +127,7 @@ namespace Project_Milestone
             end = convertStringToDate(endDate);
             DateTime listed = new DateTime();
 
-            int curTotal = expenses.Count(s => s != null);//tptal valid entries in array
+            int curTotal = getCurTotal();
 
             for (int i = 0; i < curTotal; i++)
             {
@@ -156,7 +159,56 @@ namespace Project_Milestone
             Console.WriteLine("---------------------------------");
 
         }
+        
+        public static void searchItem()
+        {
+            Console.WriteLine("---------------------------------");
 
+            Console.WriteLine("You can now search for an expense! Do you want to search using the Description or Caterogy?");
+            String searchTermG = Console.ReadLine();
+            while(!searchTermG.ToLower().Equals("description") || !searchTermG.ToLower().Equals("category"))
+            {
+                Console.WriteLine("Please either enter Description or Category as your input");
+                searchTermG = Console.ReadLine();
+            }
+            int curTotal = getCurTotal();
+            int generalSearchValue;
+            if(searchTermG.ToLower().Equals("description"))
+            {
+               generalSearchValue = 1; //for Description
+            }
+            else
+            {
+                generalSearchValue = 2; //For Category
+            }
+
+            Console.WriteLine("Please enter the search term that we need to search for in the " + searchTermG + "'s");
+            String userSearchTerm = Console.ReadLine().ToLower();
+
+            Console.WriteLine("\nDisplaying Summary\n");
+            for (int i = 0; i < curTotal; i++)
+            {
+                String[] arrayData = expenses[i].Split("☺");
+                if(arrayData[generalSearchValue].ToLower().Contains(userSearchTerm))
+                {
+                    Console.WriteLine("\n");
+                    Console.WriteLine("Item Number - " + (i + 1));
+                    Console.WriteLine("Date Of Purchase - " + convertStringToDate(arrayData[0]));
+                    Console.WriteLine("Description - " + arrayData[1]); //TODO - Display in sixth truncated blank, if any spaces six or more
+                }
+            }
+
+
+            Console.WriteLine("---------------------------------");
+        }
+
+        public static void modifyItem()
+        {
+
+        }
+        
+
+        //extra methods to help with existing methods
         public static DateTime convertStringToDate(String date)
         {
 
@@ -195,5 +247,48 @@ namespace Project_Milestone
             }
             return smartS;
         }
+
+        public static int getCurTotal()
+        {
+            int curTotal = expenses.Count(s => s != null);//total valid entries in array
+            return curTotal;
+        }
+
     }
 }
+
+/* Question Contents
+Maggie’s family loves shopping and earning Smart Shopper’s points. They earn points when they buy
+any item at selected local stores. As a developer see how they can backup and record their purchases
+into a Household Account system to keep track of their expenditures.
+Milestone 1 - Planning
+In the first milestone, you are required to plan out exactly how you will provide a solution for the
+required. Below its set of prerequisites for implementing all the requirements of this project.
+The system should be able to store up to 10000 costs and revenues. For each
+expense it should be allowed to save the following information:
+• Date (8 characters: YYYYMMDD format) of purchase
+• Description of expenditure or item
+• Category
+• Amount
+Using a menu allowing the user to perform the following operations:
+1 - Add a new expense. This option allows the user to capture the purchase date (date: YYYYMMDD
+format), the description of the item purchased and the category of an item.
+2 - Show all expenses. This option allows the user to specify the category (e.g. devices), a period in
+terms of start date and end date when the purchase is made for that category. Finally display the
+summary as item number, date (format DD / MM / YYYY) description, a category in parentheses,
+and amount to two decimal places, all in the same line, separated by hyphens. At the end of all the
+data show the total amount of data displayed.
+3 – Search item. This option allows the user to specify the description or category without
+distinguishing case sensitive or not). Finally, the summary is displayed as item number, the date of
+purchase and item description (the description is displayed in the sixth truncated blank, if any
+spaces six or more).
+4 - Modify item. This option allows the user to specify the item by its number, and show the
+previous value of each field (date purchased, item description, category and amount) and display
+the message “press Enter to disable modification of any data” otherwise allow the user to make
+necessary modifications to the item description, category, date and amount of purchase.
+5 - Delete item. This option allows the user to capture the item number and clear the item from
+the history of the record. Be advised that every time item is removed from the list, the list is reordered.
+6 - Sort items alphabetically. This option sort the items in the list by date (if matched) description.
+7 - Normalize descriptions: remove trailing spaces, spaces and mirror sites. If a description is all
+uppercase, will be converted to lowercase (except for the first letter, kept in uppercase). 
+ */
