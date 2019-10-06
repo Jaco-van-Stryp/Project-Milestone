@@ -193,7 +193,7 @@ namespace Project_Milestone
                 generalSearchValue = 2; //For Category
             }
             bool found = false;
-            Console.WriteLine("Please enter the search term that we need to search for in the " + searchTermG + "'s");
+            Console.WriteLine("Please enter the search term that we need to search for in the " + searchTermG + "s");
             String userSearchTerm = Console.ReadLine().ToLower();
 
             for (int i = 0; i < curTotal; i++)
