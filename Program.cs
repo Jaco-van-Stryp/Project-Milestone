@@ -10,7 +10,8 @@ namespace Project_Milestone
         //Daniel Van Stryp Programming 152 - Project Milestone
         enum menu
         {
-            add = 1,
+            exit = 0,
+            add,
             displayAll,
             search,
             modify,
@@ -33,6 +34,7 @@ namespace Project_Milestone
         {
 
             Console.WriteLine("Please select one of the following");
+            Console.WriteLine("0) Exit Application");
             Console.WriteLine("1) Add A New Expense");
             Console.WriteLine("2) Show All Expenses");
             Console.WriteLine("3) Search Item");
@@ -47,6 +49,9 @@ namespace Project_Milestone
 
             switch (mainMenu)
             {
+                case menu.exit:
+                    Environment.Exit(0);
+                    break;
                 case menu.add:
                     addExpense();
                     break;
@@ -63,10 +68,12 @@ namespace Project_Milestone
                     deleteItem();
                     break;
                 case menu.sort:
+                    sort();
                     break;
                 case menu.normalize:
                     break;
                 default:
+                    Console.WriteLine("Unkown Input, Please Try Again");
                     break;
             }
             displayMenu();
@@ -274,6 +281,58 @@ namespace Project_Milestone
             Console.WriteLine("Deletion Complete!");
             Console.WriteLine("---------------------------------");
 
+        }
+
+        public static String[] sort(String[] input)
+        {
+            //Sorting by description first then doing date after so description is on order
+            Console.WriteLine("Sorting...");
+
+            //Sorting Descriptions
+            String temp;
+            for (int i = 0; i < input.Length; i++)
+            {
+                String[] splitI = input[i].Split("☺");
+                for (int j = i + 1; j < input.Length; j++)
+                {
+                    String[] splitJ = input[i].Split("☺");
+                    //[0] would be Date
+                    //[1] would be Description
+                    //[2] would be Category
+                    //[3] would be Amount
+                    if (splitI[1][0] > splitJ[1][0]) //so the words can be sorted aswell
+                    {
+                        temp = input[i];
+                        input[i] = input[j];
+                        input[j] = temp;
+                    }
+                }
+            }
+
+            //Sorting dates
+            
+            for (int i = 0; i < input.Length; i++)
+            {
+                String[] splitI = input[i].Split("☺");
+                for (int j = i + 1; j < input.Length; j++)
+                {
+                    String[] splitJ = input[i].Split("☺");
+                    //[0] would be Date
+                    //[1] would be Description
+                    //[2] would be Category
+                    //[3] would be Amount
+                    if(convertStringToDate(splitI[0]) > convertStringToDate(splitJ[0]))
+                    {
+                        temp = input[i];
+                        input[i] = input[j];
+                        input[j] = temp;
+                    }
+                }
+            }
+            Console.WriteLine("Sorting Complete");
+
+
+            return input;
         }
 
         //extra methods to help with existing methods
