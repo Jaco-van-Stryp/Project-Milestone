@@ -22,7 +22,7 @@ namespace Project_Milestone
 
         //Fixed Array of 10'000 Entries
         static String[] expenses = new string[10000];
-
+        static bool allowModifications = true;
         static void Main(string[] args)
         {
             displayMenu(); //Displaying menu to the user
@@ -204,9 +204,30 @@ namespace Project_Milestone
 
         public static void modifyItem()
         {
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Modification");
+            Console.WriteLine("Please enter the item number you wish to modify");
+            int itemNum = int.Parse(Console.ReadLine()) - 1;
+            while(itemNum > getCurTotal())
+            {
+                Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal());
+                itemNum = int.Parse(Console.ReadLine()) - 1;
+            }
+            String[] itemModification = expenses[itemNum].Split("☺");
+            Console.WriteLine("You have selected Item Number - " + (itemNum + 1) + "\nThis is what it currently contains");
+            Console.WriteLine("Date Purchased - " + convertStringToDate(itemModification[0]));
+            Console.WriteLine("Item Description - " + itemModification[1]);
+            Console.WriteLine("Category - " + itemModification[2]);
+            Console.WriteLine("Amount - R" + itemModification[3]);
+            Console.WriteLine("\nPress Enter to disable modification of any data");
+            do
+            {
+                Console.WriteLine("Modification has been disabled");
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+            Console.WriteLine("---------------------------------");
 
         }
-        
+
 
         //extra methods to help with existing methods
         public static DateTime convertStringToDate(String date)
