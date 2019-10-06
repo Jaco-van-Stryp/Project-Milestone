@@ -143,7 +143,7 @@ namespace Project_Milestone
                     if (listed >= start && listed <= end)
                     {
                         Console.WriteLine("\n");
-                        Console.WriteLine("Date - " + convertStringToDate(shortData[0]).ToLongDateString());
+                        Console.WriteLine("Date - " + convertStringToDate(shortData[0]).ToShortDateString());
                         Console.WriteLine("Description - " + shortData[1]);
                         Console.WriteLine("Category - " + shortData[2]);
                         Console.WriteLine("Amount - " + get2Decimal(shortData[3]));
@@ -194,7 +194,7 @@ namespace Project_Milestone
                     found = true;
                     Console.WriteLine("\n");
                     Console.WriteLine("Item Number - " + (i + 1));
-                    Console.WriteLine("Date Of Purchase - " + convertStringToDate(arrayData[0]).ToLongDateString());
+                    Console.WriteLine("Date Of Purchase - " + convertStringToDate(arrayData[0]).ToShortDateString());
                     Console.WriteLine("Description - " + arrayData[1]); //TODO - Display in sixth truncated blank, if any spaces six or more
                 }
             }
@@ -222,7 +222,7 @@ namespace Project_Milestone
             }
             String[] itemModification = expenses[itemNum].Split("☺");
             Console.WriteLine("You have selected Item Number - " + (itemNum + 1) + "\nThis is what it currently contains");
-            Console.WriteLine("Date Purchased - " + convertStringToDate(itemModification[0]).ToLongDateString());
+            Console.WriteLine("Date Purchased - " + convertStringToDate(itemModification[0]).ToShortDateString());
             Console.WriteLine("Item Description - " + itemModification[1]);
             Console.WriteLine("Category - " + itemModification[2]);
             Console.WriteLine("Amount - R" + itemModification[3]);
@@ -238,7 +238,22 @@ namespace Project_Milestone
                 {
                     Console.WriteLine("Modifications Enabled");
                     Console.WriteLine("Please fill in the updated infromation for item number " + itemNum);
+
+                String date = "";
+                while (date.Length != 8) //validating the length of 8
+                {
+                    Console.WriteLine("Please enter the purchase date in format YYYYMMDD (8 Charaacters)");
+                    date = Console.ReadLine();
                 }
+                Console.WriteLine("Please enter the Description of the Expenditure or Item");
+                String desc = Console.ReadLine();
+                Console.WriteLine("What category is this?");
+                String category = Console.ReadLine();
+                Console.WriteLine("What is the amount for this Expenditure or Item?");
+                String amount = Console.ReadLine();
+                expenses[itemNum - 1] = date + "☺" + desc + "☺" + category + "☺" + amount;
+                Console.WriteLine("Item Number " + itemNum + " has been updated");
+            }
             Console.WriteLine("---------------------------------");
 
         }
