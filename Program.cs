@@ -34,7 +34,6 @@ namespace Project_Milestone
         {
 
             Console.WriteLine("Please select one of the following");
-            Console.WriteLine("0) Exit Application");
             Console.WriteLine("1) Add A New Expense");
             Console.WriteLine("2) Show All Expenses");
             Console.WriteLine("3) Search Item");
@@ -42,6 +41,8 @@ namespace Project_Milestone
             Console.WriteLine("5) Delete Item");
             Console.WriteLine("6) Sort Items Alphabetically");
             Console.WriteLine("7) Normalize Descriptions");
+            Console.WriteLine("0) Exit Application");
+
 
             int input = int.Parse(Console.ReadLine());
 
