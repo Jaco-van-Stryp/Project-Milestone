@@ -18,7 +18,7 @@ namespace Project_Milestone
             sort,
             normalize,
         }
-        
+
 
 
         //Fixed Array of 10'000 Entries
@@ -31,7 +31,7 @@ namespace Project_Milestone
 
         private static void displayMenu()
         {
-           
+
             Console.WriteLine("Please select one of the following");
             Console.WriteLine("1) Add A New Expense");
             Console.WriteLine("2) Show All Expenses");
@@ -162,23 +162,23 @@ namespace Project_Milestone
             Console.WriteLine("---------------------------------");
 
         }
-        
+
         public static void searchItem()
         {
             Console.WriteLine("---------------------------------");
 
             Console.WriteLine("You can now search for an expense! Do you want to search using the Description or Category?");
             String searchTermG = Console.ReadLine();
-            while(!searchTermG.ToLower().Equals("description") && !searchTermG.ToLower().Equals("category"))
+            while (!searchTermG.ToLower().Equals("description") && !searchTermG.ToLower().Equals("category"))
             {
                 Console.WriteLine("Please either enter Description or Category as your input");
                 searchTermG = Console.ReadLine();
             }
             int curTotal = getCurTotal();
             int generalSearchValue;
-            if(searchTermG.ToLower().Equals("description"))
+            if (searchTermG.ToLower().Equals("description"))
             {
-               generalSearchValue = 1; //for Description
+                generalSearchValue = 1; //for Description
             }
             else
             {
@@ -191,7 +191,7 @@ namespace Project_Milestone
             for (int i = 0; i < curTotal; i++)
             {
                 String[] arrayData = expenses[i].Split("☺");
-                if(arrayData[generalSearchValue].ToLower().Contains(userSearchTerm))
+                if (arrayData[generalSearchValue].ToLower().Contains(userSearchTerm))
                 {
                     found = true;
                     Console.WriteLine("\n");
@@ -200,7 +200,7 @@ namespace Project_Milestone
                     Console.WriteLine("Description - " + arrayData[1]); //TODO - Display in sixth truncated blank, if any spaces six or more
                 }
             }
-            if(found == false)
+            if (found == false)
             {
                 Console.WriteLine("Could not find your search term!");
             }
@@ -214,7 +214,7 @@ namespace Project_Milestone
             Console.WriteLine("Modification");
             Console.WriteLine("Please enter the item number you wish to modify");
             int itemNum = int.Parse(Console.ReadLine()) - 1;
-            while(itemNum > getCurTotal())
+            while (itemNum > getCurTotal())
             {
                 Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal());
                 itemNum = int.Parse(Console.ReadLine()) - 1;
@@ -227,16 +227,16 @@ namespace Project_Milestone
             Console.WriteLine("Amount - R" + itemModification[3]);
             Console.WriteLine("\nPress Enter to disable modification of any data or any other key to edit the current data");
 
-                ConsoleKey key = Console.ReadKey().Key;
-                Console.WriteLine();
-                 if(key == ConsoleKey.Enter)
-                {
-                    Console.WriteLine("Modification Disabled, No changes were made");
-                }
-                 else
-                {
-                    Console.WriteLine("Modifications Enabled");
-                    Console.WriteLine("Please fill in the updated infromation for item number " + itemNum);
+            ConsoleKey key = Console.ReadKey().Key;
+            Console.WriteLine();
+            if (key == ConsoleKey.Enter)
+            {
+                Console.WriteLine("Modification Disabled, No changes were made");
+            }
+            else
+            {
+                Console.WriteLine("Modifications Enabled");
+                Console.WriteLine("Please fill in the updated infromation for item number " + itemNum);
 
                 String date = "";
                 while (date.Length != 8) //validating the length of 8
@@ -288,14 +288,14 @@ namespace Project_Milestone
         }
         public static String formatDateString(String date)
         {
-            
 
-                String year = date.Substring(0, 4);
-                String month = date.Substring(4, 2);
-                String day = date.Substring(6, 2);
 
-                   return day + "/" + month + "/" + year;
-            
+            String year = date.Substring(0, 4);
+            String month = date.Substring(4, 2);
+            String day = date.Substring(6, 2);
+
+            return day + "/" + month + "/" + year;
+
         }
         public static string get2Decimal(String input)
         {
@@ -318,7 +318,7 @@ namespace Project_Milestone
                     smartS += sInput[i];
                 }
             }
-            if(hasDec == false)
+            if (hasDec == false)
             {
                 smartS += ".00";
             }
@@ -327,7 +327,7 @@ namespace Project_Milestone
 
         public static int getCurTotal()
         {
-            int curTotal = expenses.Count(s => s != null);//total valid entries in array
+            int curTotal = expenses.Count(s => s != null); //total valid entries in array
             return curTotal;
         }
         public static String[] reOrderArray(String[] input)
