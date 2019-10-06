@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -59,6 +60,7 @@ namespace Project_Milestone
                     modifyItem();
                     break;
                 case menu.delete:
+                    deleteItem();
                     break;
                 case menu.sort:
                     break;
@@ -143,7 +145,7 @@ namespace Project_Milestone
                     if (listed >= start && listed <= end)
                     {
                         Console.WriteLine("\n");
-                        Console.WriteLine("Date - " + convertStringToDate(shortData[0]).ToShortDateString());
+                        Console.WriteLine("Date - " + formatDateString(shortData[0]));
                         Console.WriteLine("Description - " + shortData[1]);
                         Console.WriteLine("Category - " + shortData[2]);
                         Console.WriteLine("Amount - " + get2Decimal(shortData[3]));
@@ -194,7 +196,7 @@ namespace Project_Milestone
                     found = true;
                     Console.WriteLine("\n");
                     Console.WriteLine("Item Number - " + (i + 1));
-                    Console.WriteLine("Date Of Purchase - " + convertStringToDate(arrayData[0]).ToShortDateString());
+                    Console.WriteLine("Date Of Purchase - " + (arrayData[0]));
                     Console.WriteLine("Description - " + arrayData[1]); //TODO - Display in sixth truncated blank, if any spaces six or more
                 }
             }
@@ -208,10 +210,7 @@ namespace Project_Milestone
 
         public static void modifyItem()
         {
-            
             Console.WriteLine("---------------------------------");
-           
-
             Console.WriteLine("Modification");
             Console.WriteLine("Please enter the item number you wish to modify");
             int itemNum = int.Parse(Console.ReadLine()) - 1;
@@ -222,7 +221,7 @@ namespace Project_Milestone
             }
             String[] itemModification = expenses[itemNum].Split("☺");
             Console.WriteLine("You have selected Item Number - " + (itemNum + 1) + "\nThis is what it currently contains");
-            Console.WriteLine("Date Purchased - " + convertStringToDate(itemModification[0]).ToShortDateString());
+            Console.WriteLine("Date Purchased - " + formatDateString(itemModification[0]));
             Console.WriteLine("Item Description - " + itemModification[1]);
             Console.WriteLine("Category - " + itemModification[2]);
             Console.WriteLine("Amount - R" + itemModification[3]);
@@ -259,7 +258,23 @@ namespace Project_Milestone
         }
 
 
+        public static void deleteItem()
+        {
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Deletion");
+            Console.WriteLine("Enter a item number that you want to delete");
+            int itemNum = int.Parse(Console.ReadLine()) - 1;
+            while (itemNum > getCurTotal())
+            {
+                Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal());
+                itemNum = int.Parse(Console.ReadLine()) - 1;
+            }
+            expenses[itemNum] = null;
+            expenses = reOrderArray(expenses);
+            Console.WriteLine("Deletion Complete!");
+            Console.WriteLine("---------------------------------");
 
+        }
 
         //extra methods to help with existing methods
         public static DateTime convertStringToDate(String date)
@@ -268,9 +283,19 @@ namespace Project_Milestone
             String year = date.Substring(0, 4);
             String month = date.Substring(4, 2);
             String day = date.Substring(6, 2);
-            DateTime newDate = new DateTime();
             DateTime dt = DateTime.ParseExact(day + "/" + month + "/" + year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            return newDate;
+            return dt;
+        }
+        public static String formatDateString(String date)
+        {
+            
+
+                String year = date.Substring(0, 4);
+                String month = date.Substring(4, 2);
+                String day = date.Substring(6, 2);
+
+                   return day + "/" + month + "/" + year;
+            
         }
         public static string get2Decimal(String input)
         {
@@ -304,6 +329,21 @@ namespace Project_Milestone
         {
             int curTotal = expenses.Count(s => s != null);//total valid entries in array
             return curTotal;
+        }
+        public static String[] reOrderArray(String[] input)
+        {
+            List<String> temp = new List<String>();
+            temp = input.ToList();
+            temp.RemoveAll(null);
+            for (int i = 0; i < temp.Count; i++)
+            {
+                input[i] = temp[i];
+            }
+            for (int i = temp.Count; i < input.Length; i++)
+            {
+                input[i] = null;
+            }
+            return input;
         }
 
     }
