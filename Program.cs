@@ -24,7 +24,6 @@ namespace Project_Milestone
 
         //Fixed Array of 10'000 Entries
         static String[] expenses = new string[10000];
-        static bool allowModifications = true;
         static void Main(string[] args)
         {
             displayMenu(); //Displaying menu to the user
@@ -157,7 +156,7 @@ namespace Project_Milestone
                         Console.WriteLine("Date - " + formatDateString(shortData[0]));
                         Console.WriteLine("Description - " + shortData[1]);
                         Console.WriteLine("Category - " + shortData[2]);
-                        Console.WriteLine("Amount - " + get2Decimal(shortData[3]));
+                        Console.WriteLine("Amount - R" + get2Decimal(shortData[3]));
 
                         Console.WriteLine("\n");
 
@@ -231,7 +230,7 @@ namespace Project_Milestone
             Console.WriteLine("Modification");
             Console.WriteLine("Please enter the item number you wish to modify");
             int itemNum = int.Parse(Console.ReadLine()) - 1;
-            while (itemNum > getCurTotal())
+            while (itemNum > getCurTotal() - 1)
             {
                 Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal());
                 itemNum = int.Parse(Console.ReadLine()) - 1;
@@ -252,8 +251,9 @@ namespace Project_Milestone
             }
             else
             {
+                Console.WriteLine();
                 Console.WriteLine("Modifications Enabled");
-                Console.WriteLine("Please fill in the updated infromation for item number " + itemNum);
+                Console.WriteLine("Please fill in the updated infromation for item number " + (itemNum + 1));
 
                 String date = "";
                 while (date.Length != 8) //validating the length of 8
@@ -267,8 +267,8 @@ namespace Project_Milestone
                 String category = Console.ReadLine();
                 Console.WriteLine("What is the amount for this Expenditure or Item?");
                 String amount = Console.ReadLine();
-                expenses[itemNum - 1] = date + "☺" + desc + "☺" + category + "☺" + amount;
-                Console.WriteLine("Item Number " + itemNum + " has been updated");
+                expenses[itemNum] = date + "☺" + desc + "☺" + category + "☺" + amount;
+                Console.WriteLine("Item Number " + (itemNum  + 1) + " has been updated");
             }
             Console.WriteLine("---------------------------------");
 
@@ -281,7 +281,7 @@ namespace Project_Milestone
             Console.WriteLine("Deletion");
             Console.WriteLine("Enter a item number that you want to delete");
             int itemNum = int.Parse(Console.ReadLine()) - 1;
-            while (itemNum > getCurTotal())
+            while (itemNum > getCurTotal() - 1)
             {
                 Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal());
                 itemNum = int.Parse(Console.ReadLine()) - 1;
@@ -302,6 +302,9 @@ namespace Project_Milestone
             String temp;
             for (int i = 0; i < input.Length; i++)
             {
+               if(input[i] != null)
+                {
+
                 String[] splitI = input[i].Split("☺");
                 for (int j = i + 1; j < input.Length; j++)
                 {
@@ -317,25 +320,30 @@ namespace Project_Milestone
                         input[j] = temp;
                     }
                 }
+                }
+
             }
 
             //Sorting dates
-            
+
             for (int i = 0; i < input.Length; i++)
             {
-                String[] splitI = input[i].Split("☺");
-                for (int j = i + 1; j < input.Length; j++)
+                if (input[i] != null)
                 {
-                    String[] splitJ = input[i].Split("☺");
-                    //[0] would be Date
-                    //[1] would be Description
-                    //[2] would be Category
-                    //[3] would be Amount
-                    if(convertStringToDate(splitI[0]) > convertStringToDate(splitJ[0]))
+                    String[] splitI = input[i].Split("☺");
+                    for (int j = i + 1; j < input.Length; j++)
                     {
-                        temp = input[i];
-                        input[i] = input[j];
-                        input[j] = temp;
+                        String[] splitJ = input[i].Split("☺");
+                        //[0] would be Date
+                        //[1] would be Description
+                        //[2] would be Category
+                        //[3] would be Amount
+                        if (convertStringToDate(splitI[0]) > convertStringToDate(splitJ[0]))
+                        {
+                            temp = input[i];
+                            input[i] = input[j];
+                            input[j] = temp;
+                        }
                     }
                 }
             }
@@ -354,7 +362,7 @@ namespace Project_Milestone
                 String description = split[1];
                 description = description.Trim(); //removing trail spaces
                 description = description.ToLower();
-                description = description[0].ToString().ToUpper() + description.Substring(2, description.Length-1);
+                description = FirstLetterToUpper(description);
                 expenses[i] = split[0] + "☺" + description + "☺" + split[2] + "☺" + split[3];
             }
             Console.WriteLine("Done Normalising");
@@ -363,6 +371,15 @@ namespace Project_Milestone
 
 
         //extra methods to help with existing methods
+        public static string FirstLetterToUpper(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
+
         public static DateTime convertStringToDate(String date)
         {
 
@@ -395,7 +412,6 @@ namespace Project_Milestone
                     smartS += sInput[i];
                     smartS += sInput[i + 1];
                     smartS += sInput[i + 2];
-                    smartS += sInput[i + 3];
                     hasDec = true;
                     break;
                 }
@@ -420,7 +436,7 @@ namespace Project_Milestone
         {
             List<String> temp = new List<String>();
             temp = input.ToList();
-            temp.RemoveAll(null);
+//temp.RemoveAll(null);
             for (int i = 0; i < temp.Count; i++)
             {
                 input[i] = temp[i];
