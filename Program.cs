@@ -56,6 +56,7 @@ namespace Project_Milestone
                     searchItem();
                     break;
                 case menu.modify:
+                    modifyItem();
                     break;
                 case menu.delete:
                     break;
@@ -142,7 +143,7 @@ namespace Project_Milestone
                     if (listed >= start && listed <= end)
                     {
                         Console.WriteLine("\n");
-                        Console.WriteLine("Date - " + convertStringToDate(shortData[0]));
+                        Console.WriteLine("Date - " + convertStringToDate(shortData[0]).ToLongDateString());
                         Console.WriteLine("Description - " + shortData[1]);
                         Console.WriteLine("Category - " + shortData[2]);
                         Console.WriteLine("Amount - " + get2Decimal(shortData[3]));
@@ -164,9 +165,9 @@ namespace Project_Milestone
         {
             Console.WriteLine("---------------------------------");
 
-            Console.WriteLine("You can now search for an expense! Do you want to search using the Description or Caterogy?");
+            Console.WriteLine("You can now search for an expense! Do you want to search using the Description or Category?");
             String searchTermG = Console.ReadLine();
-            while(!searchTermG.ToLower().Equals("description") || !searchTermG.ToLower().Equals("category"))
+            while(!searchTermG.ToLower().Equals("description") && !searchTermG.ToLower().Equals("category"))
             {
                 Console.WriteLine("Please either enter Description or Category as your input");
                 searchTermG = Console.ReadLine();
@@ -181,30 +182,36 @@ namespace Project_Milestone
             {
                 generalSearchValue = 2; //For Category
             }
-
+            bool found = false;
             Console.WriteLine("Please enter the search term that we need to search for in the " + searchTermG + "'s");
             String userSearchTerm = Console.ReadLine().ToLower();
 
-            Console.WriteLine("\nDisplaying Summary\n");
             for (int i = 0; i < curTotal; i++)
             {
                 String[] arrayData = expenses[i].Split("☺");
                 if(arrayData[generalSearchValue].ToLower().Contains(userSearchTerm))
                 {
+                    found = true;
                     Console.WriteLine("\n");
                     Console.WriteLine("Item Number - " + (i + 1));
-                    Console.WriteLine("Date Of Purchase - " + convertStringToDate(arrayData[0]));
+                    Console.WriteLine("Date Of Purchase - " + convertStringToDate(arrayData[0]).ToLongDateString());
                     Console.WriteLine("Description - " + arrayData[1]); //TODO - Display in sixth truncated blank, if any spaces six or more
                 }
             }
-
+            if(found == false)
+            {
+                Console.WriteLine("Could not find your search term!");
+            }
 
             Console.WriteLine("---------------------------------");
         }
 
         public static void modifyItem()
         {
+            
             Console.WriteLine("---------------------------------");
+           
+
             Console.WriteLine("Modification");
             Console.WriteLine("Please enter the item number you wish to modify");
             int itemNum = int.Parse(Console.ReadLine()) - 1;
@@ -215,18 +222,28 @@ namespace Project_Milestone
             }
             String[] itemModification = expenses[itemNum].Split("☺");
             Console.WriteLine("You have selected Item Number - " + (itemNum + 1) + "\nThis is what it currently contains");
-            Console.WriteLine("Date Purchased - " + convertStringToDate(itemModification[0]));
+            Console.WriteLine("Date Purchased - " + convertStringToDate(itemModification[0]).ToLongDateString());
             Console.WriteLine("Item Description - " + itemModification[1]);
             Console.WriteLine("Category - " + itemModification[2]);
             Console.WriteLine("Amount - R" + itemModification[3]);
-            Console.WriteLine("\nPress Enter to disable modification of any data");
-            do
-            {
-                Console.WriteLine("Modification has been disabled");
-            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+            Console.WriteLine("\nPress Enter to disable modification of any data or any other key to edit the current data");
+
+                ConsoleKey key = Console.ReadKey().Key;
+                Console.WriteLine();
+                 if(key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine("Modification Disabled, No changes were made");
+                }
+                 else
+                {
+                    Console.WriteLine("Modifications Enabled");
+                    Console.WriteLine("Please fill in the updated infromation for item number " + itemNum);
+                }
             Console.WriteLine("---------------------------------");
 
         }
+
+
 
 
         //extra methods to help with existing methods
@@ -236,7 +253,6 @@ namespace Project_Milestone
             String year = date.Substring(0, 4);
             String month = date.Substring(4, 2);
             String day = date.Substring(6, 2);
-            Console.WriteLine(day + "/" + month + "/" + year);
             DateTime newDate = new DateTime();
             DateTime dt = DateTime.ParseExact(day + "/" + month + "/" + year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             return newDate;
