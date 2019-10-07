@@ -299,7 +299,7 @@ namespace Project_Milestone
             //Sorting by description first then doing date after so description is on order
             Console.WriteLine("Sorting...");
 
-            //Sorting Descriptions
+            //Sorting Descriptions //bubble sort for description
             String temp;
             for (int i = 0; i < input.Length; i++)
             {
@@ -314,7 +314,7 @@ namespace Project_Milestone
                     //[1] would be Description
                     //[2] would be Category
                     //[3] would be Amount
-                    if (splitI[1][0] > splitJ[1][0]) //so the words can be sorted aswell
+                    if (splitI[1][0] > splitJ[1][0]) //gets the first letter of descrption so the words can be sorted aswell
                     {
                         temp = input[i];
                         input[i] = input[j];
@@ -325,7 +325,7 @@ namespace Project_Milestone
 
             }
 
-            //Sorting dates
+            //Sorting dates using bubble sort
 
             for (int i = 0; i < input.Length; i++)
             {
@@ -339,7 +339,7 @@ namespace Project_Milestone
                         //[1] would be Description
                         //[2] would be Category
                         //[3] would be Amount
-                        if (convertStringToDate(splitI[0]) > convertStringToDate(splitJ[0]))
+                        if (convertStringToDate(splitI[0]) > convertStringToDate(splitJ[0])) //tests if date is later than date
                         {
                             temp = input[i];
                             input[i] = input[j];
@@ -354,17 +354,17 @@ namespace Project_Milestone
             return input;
         }
 
-        public static void normalizeDesctiptions()
+        public static void normalizeDesctiptions() 
         {
-            Console.WriteLine("Normalising...");
+            Console.WriteLine("Normalising..."); 
             for (int i = 0; i < getCurTotal(); i++)
             {
-                String[] split = expenses[i].Split("☺");
-                String description = split[1];
+                String[] split = expenses[i].Split("☺"); //Splits it into the seperate categories
+                String description = split[1]; //sets description accordingly
                 description = description.Trim(); //removing trail spaces
-                description = description.ToLower();
-                description = FirstLetterToUpper(description);
-                expenses[i] = split[0] + "☺" + description + "☺" + split[2] + "☺" + split[3];
+                description = description.ToLower(); //lowers everything
+                description = FirstLetterToUpper(description); //usess below method to change the first letter to uppercase
+                expenses[i] = split[0] + "☺" + description + "☺" + split[2] + "☺" + split[3]; //adds it back to the array
             }
             Console.WriteLine("Done Normalising");
 
@@ -372,13 +372,13 @@ namespace Project_Milestone
 
 
         //extra methods to help with existing methods
-        public static string FirstLetterToUpper(string s)
+        public static string FirstLetterToUpper(string s) //algorithm to conver the first letter to uppercase
         {
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(s))  //if the string does not exist
             {
                 return string.Empty;
             }
-            return char.ToUpper(s[0]) + s.Substring(1);
+            return char.ToUpper(s[0]) + s.Substring(1); //returns the first letter to uppercase and then the rest of the string
         }
 
         public static DateTime convertStringToDate(String date)
@@ -388,7 +388,7 @@ namespace Project_Milestone
             String month = date.Substring(4, 2);
             String day = date.Substring(6, 2);
             DateTime dt = DateTime.ParseExact(day + "/" + month + "/" + year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            return dt;
+            return dt; //splits the date into a DateTime format
         }
         public static String formatDateString(String date)
         {
@@ -398,32 +398,32 @@ namespace Project_Milestone
             String month = date.Substring(4, 2);
             String day = date.Substring(6, 2);
 
-            return day + "/" + month + "/" + year;
+            return day + "/" + month + "/" + year; //splits into readable format 
 
         }
         public static string get2Decimal(String input)
         {
             char[] sInput = input.ToCharArray();
             bool hasDec = false;
-            String smartS = "";
+            String smartS = ""; //smartS is a string containing the final value that we will return
             for (int i = 0; i < sInput.Length; i++)
             {
                 if (sInput[i] == '.' || sInput[i] == ',')
                 {
-                    smartS += sInput[i];
+                    smartS += sInput[i]; 
                     smartS += sInput[i + 1];
                     smartS += sInput[i + 2];
-                    hasDec = true;
+                    hasDec = true; //if there is a decimal, stop and add the next 2 characters
                     break;
                 }
                 else
                 {
-                    smartS += sInput[i];
+                    smartS += sInput[i]; //keeps adding to the array untill it gets a decimal
                 }
             }
             if (hasDec == false)
             {
-                smartS += ".00";
+                smartS += ".00"; //if there is no decimal, add .00
             }
             return smartS;
         }
@@ -435,16 +435,15 @@ namespace Project_Milestone
         }
         public static String[] reOrderArray(String[] input)
         {
-            List<String> temp = new List<String>();
-            temp = input.ToList();
-//temp.RemoveAll(null);
+            List<String> temp = new List<String>(); 
+            temp = input.ToList(); //adds the input string to a list
             for (int i = 0; i < temp.Count; i++)
             {
-                input[i] = temp[i];
+                input[i] = temp[i]; //adds all values that are not null back into the array
             }
             for (int i = temp.Count; i < input.Length; i++)
             {
-                input[i] = null;
+                input[i] = null; //adds everything else as null again
             }
             return input;
         }
@@ -484,6 +483,6 @@ necessary modifications to the item description, category, date and amount of pu
 5 - Delete item. This option allows the user to capture the item number and clear the item from
 the history of the record. Be advised that every time item is removed from the list, the list is reordered.
 6 - Sort items alphabetically. This option sort the items in the list by date (if matched) description.
-7 - Normalize descriptions: remove trailing spaces, spaces and mirror sites. If a description is all
+7 - Normalize descriptions: remove trailing spaces, If a description is all
 uppercase, will be converted to lowercase (except for the first letter, kept in uppercase). 
  */
