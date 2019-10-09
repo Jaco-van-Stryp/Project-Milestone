@@ -348,7 +348,7 @@ namespace Project_Milestone
                 }
             }
             Console.WriteLine("Sorting Complete");
-
+           
 
             return input;
         }
@@ -436,7 +436,6 @@ namespace Project_Milestone
         {
             List<String> temp = new List<String>();
             temp = input.ToList();
-//temp.RemoveAll(null);
             for (int i = 0; i < temp.Count; i++)
             {
                 input[i] = temp[i];
@@ -451,38 +450,4 @@ namespace Project_Milestone
     }
 }
 
-/* Question Contents
-Maggie’s family loves shopping and earning Smart Shopper’s points. They earn points when they buy
-any item at selected local stores. As a developer see how they can backup and record their purchases
-into a Household Account system to keep track of their expenditures.
-Milestone 1 - Planning
-In the first milestone, you are required to plan out exactly how you will provide a solution for the
-required. Below its set of prerequisites for implementing all the requirements of this project.
-The system should be able to store up to 10000 costs and revenues. For each
-expense it should be allowed to save the following information:
-• Date (8 characters: YYYYMMDD format) of purchase
-• Description of expenditure or item
-• Category
-• Amount
-Using a menu allowing the user to perform the following operations:
-1 - Add a new expense. This option allows the user to capture the purchase date (date: YYYYMMDD
-format), the description of the item purchased and the category of an item.
-2 - Show all expenses. This option allows the user to specify the category (e.g. devices), a period in
-terms of start date and end date when the purchase is made for that category. Finally display the
-summary as item number, date (format DD / MM / YYYY) description, a category in parentheses,
-and amount to two decimal places, all in the same line, separated by hyphens. At the end of all the
-data show the total amount of data displayed.
-3 – Search item. This option allows the user to specify the description or category without
-distinguishing case sensitive or not). Finally, the summary is displayed as item number, the date of
-purchase and item description (the description is displayed in the sixth truncated blank, if any
-spaces six or more).
-4 - Modify item. This option allows the user to specify the item by its number, and show the
-previous value of each field (date purchased, item description, category and amount) and display
-the message “press Enter to disable modification of any data” otherwise allow the user to make
-necessary modifications to the item description, category, date and amount of purchase.
-5 - Delete item. This option allows the user to capture the item number and clear the item from
-the history of the record. Be advised that every time item is removed from the list, the list is reordered.
-6 - Sort items alphabetically. This option sort the items in the list by date (if matched) description.
-7 - Normalize descriptions: remove trailing spaces, spaces and mirror sites. If a description is all
-uppercase, will be converted to lowercase (except for the first letter, kept in uppercase). 
- */
+///End oF Project
