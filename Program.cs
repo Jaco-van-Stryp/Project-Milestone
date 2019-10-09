@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -143,7 +143,7 @@ namespace Project_Milestone
 
             for (int i = 0; i < curTotal; i++)
             {
-                String[] shortData = expenses[i].Split("☺"); //splits the string of data with a ☺ so the data can be retrieved
+                String[] shortData = expenses[i].Split('☺'); //splits the string of data with a ☺ so the data can be retrieved
                 //[0] would be Date
                 //[1] would be Description
                 //[2] would be Category
@@ -199,14 +199,14 @@ namespace Project_Milestone
 
             for (int i = 0; i < curTotal; i++)
             {
-                String[] arrayData = expenses[i].Split("☺"); //splits the string in the array into a new array so that the data can be used seperatly 
+                String[] arrayData = expenses[i].Split('☺'); //splits the string in the array into a new array so that the data can be used seperatly 
                 if (arrayData[generalSearchValue].ToLower().Contains(userSearchTerm)) //checks if the search term contains in the search type using userSearchTerm
                 {
                     found = true;
                     Console.WriteLine("\n");
                     Console.WriteLine("Item Number - " + (i + 1));
                     Console.WriteLine("Date Of Purchase - " + formatDateString(arrayData[0])); //formats the date to a readable format
-                    String[] truncated = arrayData[1].Split(" "); //truncated splits all the spaces to see how many words there are
+                    String[] truncated = arrayData[1].Split(' '); //truncated splits all the spaces to see how many words there are
                     if (truncated.Length > 6)  //if there are more than 6 spaces then it needs to only display 6 words using the below concatenation
                     {
                         Console.WriteLine("Description - " + truncated[0] + " " + truncated[1] + " " + truncated[2] + " " + truncated[3] + " " + truncated[4] + " " + truncated[5] + "..."); 
@@ -236,7 +236,7 @@ namespace Project_Milestone
                 Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal()); //display error message and tells the user how many elements there are
                 itemNum = int.Parse(Console.ReadLine()) - 1;
             }
-            String[] itemModification = expenses[itemNum].Split("☺"); //splits the data into different strings so it can make more sence and be used as different sections
+            String[] itemModification = expenses[itemNum].Split('☺'); //splits the data into different strings so it can make more sence and be used as different sections
             Console.WriteLine("You have selected Item Number - " + (itemNum + 1) + "\nThis is what it currently contains"); //displays data (the string is split into itemmodification)
             Console.WriteLine("Date Purchased - " + formatDateString(itemModification[0]));
             Console.WriteLine("Item Description - " + itemModification[1]);
@@ -306,10 +306,10 @@ namespace Project_Milestone
                if(input[i] != null)
                 {
 
-                String[] splitI = input[i].Split("☺");
+                String[] splitI = input[i].Split('☺');
                 for (int j = i + 1; j < input.Length; j++)
                 {
-                    String[] splitJ = input[i].Split("☺");
+                    String[] splitJ = input[i].Split('☺');
                     //[0] would be Date
                     //[1] would be Description
                     //[2] would be Category
@@ -331,10 +331,10 @@ namespace Project_Milestone
             {
                 if (input[i] != null)
                 {
-                    String[] splitI = input[i].Split("☺");
+                    String[] splitI = input[i].Split('☺');
                     for (int j = i + 1; j < input.Length; j++)
                     {
-                        String[] splitJ = input[i].Split("☺");
+                        String[] splitJ = input[i].Split('☺');
                         //[0] would be Date
                         //[1] would be Description
                         //[2] would be Category
@@ -359,7 +359,7 @@ namespace Project_Milestone
             Console.WriteLine("Normalising..."); 
             for (int i = 0; i < getCurTotal(); i++)
             {
-                String[] split = expenses[i].Split("☺"); //Splits it into the seperate categories
+                String[] split = expenses[i].Split('☺'); //Splits it into the seperate categories
                 String description = split[1]; //sets description accordingly
                 description = description.Trim(); //removing trail spaces
                 description = description.ToLower(); //lowers everything
