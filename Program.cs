@@ -18,12 +18,12 @@ namespace Project_Milestone
             delete,
             sort,
             normalize,
-        } //Enum Menu
+        }
 
 
 
         //Fixed Array of 10'000 Entries
-        static String[] expenses = new string[10000]; //Global Array Of Strings Called Expenses
+        static String[] expenses = new string[10000];
         static void Main(string[] args)
         {
             displayMenu(); //Displaying menu to the user
@@ -32,7 +32,7 @@ namespace Project_Milestone
         private static void displayMenu()
         {
 
-            Console.WriteLine("Please select one of the following"); //Displaying the menu to the user
+            Console.WriteLine("Please select one of the following");
             Console.WriteLine("1) Add A New Expense");
             Console.WriteLine("2) Show All Expenses");
             Console.WriteLine("3) Search Item");
@@ -43,7 +43,7 @@ namespace Project_Milestone
             Console.WriteLine("0) Exit Application");
 
 
-            int input = int.Parse(Console.ReadLine()); //Get input from the user
+            int input = int.Parse(Console.ReadLine());
 
             menu mainMenu = (menu)input;
 
@@ -77,29 +77,29 @@ namespace Project_Milestone
                     Console.WriteLine("Unkown Input, Please Try Again");
                     break;
             }
-            displayMenu(); //displaying the menu again after the user made a choice
+            displayMenu();
 
         }
 
-        public static void addExpense() //Method to add an expense to the Array of strings called Expenses
+        public static void addExpense()
         {
-            int totalLeft = 10000 - expenses.Count(s => s != null); //calculates the total entries left 
-            int curTotal = getCurTotal(); //Gets the data from a below method that counts how many is not null 
-            Console.WriteLine("---------------------------------"); 
+            int totalLeft = 10000 - expenses.Count(s => s != null);
+            int curTotal = getCurTotal();
+            Console.WriteLine("---------------------------------");
 
             Console.WriteLine("Let's add a new expense!\nHow many entries do you want to add?");
-            int totalEntries = int.Parse(Console.ReadLine()); //input for how many entries the user wants to add
-            if (totalLeft - totalEntries <= 0) //tests if there is space left for the ammount of entries the user wants to add
+            int totalEntries = int.Parse(Console.ReadLine());
+            if (totalLeft - totalEntries <= 0)
             {
                 Console.WriteLine("You can only store a max of 10'000 Expenses In this program!");
             }
-            else //if there is space, do this block
+            else
             {
 
-                for (int i = curTotal; i < curTotal + totalEntries; i++) 
-                {//loops through the ammount of entries the user wants to add starting at the number of entries already in the array
+                for (int i = curTotal; i < curTotal + totalEntries; i++)
+                {
                     Console.WriteLine("Adding Entry #" + (i + 1) + " Into The List");
-                    String date = ""; 
+                    String date = "";
                     while (date.Length != 8) //validating the length of 8
                     {
                         Console.WriteLine("Please enter the purchase date in format YYYYMMDD (8 Characters)");
@@ -111,8 +111,7 @@ namespace Project_Milestone
                     String category = Console.ReadLine();
                     Console.WriteLine("What is the amount for this Expenditure or Item?");
                     String amount = Console.ReadLine();
-                    expenses[i] = date + "☺" + desc + "☺" + category + "☺" + amount; //gets all the input from the user and then saving it into this array
-                    //it is seperated by a ☺ so that it can be split into different values in other methods
+                    expenses[i] = date + "☺" + desc + "☺" + category + "☺" + amount;
                 }
 
             }
@@ -127,33 +126,33 @@ namespace Project_Milestone
 
 
             Console.WriteLine("Before we can display your expenses, Please enter a category");
-            String category = Console.ReadLine(); //gets the category from the user
+            String category = Console.ReadLine();
             Console.WriteLine("Please enter a start date to display from in format YYYYMMDD");
-            String startDate = Console.ReadLine(); //gets the start date from the user
+            String startDate = Console.ReadLine();
             Console.WriteLine("Please enter a end date to display from in format YYYYMMDD");
-            String endDate = Console.ReadLine(); //gets the end date from the user
+            String endDate = Console.ReadLine();
 
-            DateTime start = new DateTime(); 
-            start = convertStringToDate(startDate); //uses a below method to convert 8 numbers to a readable date format
+            DateTime start = new DateTime();
+            start = convertStringToDate(startDate);
             DateTime end = new DateTime();
             end = convertStringToDate(endDate);
             DateTime listed = new DateTime();
 
-            int curTotal = getCurTotal(); //gets total non-null elements in array
+            int curTotal = getCurTotal();
 
             for (int i = 0; i < curTotal; i++)
             {
-                String[] shortData = expenses[i].Split('☺'); //splits the string of data with a ☺ so the data can be retrieved
+                String[] shortData = expenses[i].Split('☺');
                 //[0] would be Date
                 //[1] would be Description
                 //[2] would be Category
                 //[3] would be Amount
-                if (category.ToLower().Equals(shortData[2])) //short data is the array of splitted data, using this to compare to the category the user wants to search
+                if (category.ToLower().Equals(shortData[2]))
                 {
-                    listed = convertStringToDate(shortData[0]); //convert the date to a readable format and adding it into a DateTime variable called listed
-                    if (listed >= start && listed <= end) //tests if the dates are between the start and end date
+                    listed = convertStringToDate(shortData[0]);
+                    if (listed >= start && listed <= end)
                     {
-                        Console.WriteLine("\n"); //displaying the data to the user
+                        Console.WriteLine("\n");
                         Console.WriteLine("Date - " + formatDateString(shortData[0]));
                         Console.WriteLine("Description - " + shortData[1]);
                         Console.WriteLine("Category - " + shortData[2]);
@@ -177,14 +176,14 @@ namespace Project_Milestone
             Console.WriteLine("---------------------------------");
 
             Console.WriteLine("You can now search for an expense! Do you want to search using the Description or Category?");
-            String searchTermG = Console.ReadLine(); //asks the user if they want to search for description or category
-            while (!searchTermG.ToLower().Equals("description") && !searchTermG.ToLower().Equals("category")) //tests for other input
+            String searchTermG = Console.ReadLine();
+            while (!searchTermG.ToLower().Equals("description") && !searchTermG.ToLower().Equals("category"))
             {
                 Console.WriteLine("Please either enter Description or Category as your input");
                 searchTermG = Console.ReadLine();
             }
-            int curTotal = getCurTotal(); //gets total non-null values in array
-            int generalSearchValue; //this variable will be used to retrieve the element out of the splitted array using the coresponding number
+            int curTotal = getCurTotal();
+            int generalSearchValue;
             if (searchTermG.ToLower().Equals("description"))
             {
                 generalSearchValue = 1; //for Description
@@ -194,32 +193,32 @@ namespace Project_Milestone
                 generalSearchValue = 2; //For Category
             }
             bool found = false;
-            Console.WriteLine("Please enter the search term that we need to search for in the " + searchTermG + "s"); 
-            String userSearchTerm = Console.ReadLine().ToLower(); //what the term is that the user wants to search for
+            Console.WriteLine("Please enter the search term that we need to search for in the " + searchTermG + "s");
+            String userSearchTerm = Console.ReadLine().ToLower();
 
             for (int i = 0; i < curTotal; i++)
             {
-                String[] arrayData = expenses[i].Split('☺'); //splits the string in the array into a new array so that the data can be used seperatly 
-                if (arrayData[generalSearchValue].ToLower().Contains(userSearchTerm)) //checks if the search term contains in the search type using userSearchTerm
+                String[] arrayData = expenses[i].Split('☺');
+                if (arrayData[generalSearchValue].ToLower().Contains(userSearchTerm))
                 {
                     found = true;
                     Console.WriteLine("\n");
                     Console.WriteLine("Item Number - " + (i + 1));
-                    Console.WriteLine("Date Of Purchase - " + formatDateString(arrayData[0])); //formats the date to a readable format
-                    String[] truncated = arrayData[1].Split(' '); //truncated splits all the spaces to see how many words there are
-                    if (truncated.Length > 6)  //if there are more than 6 spaces then it needs to only display 6 words using the below concatenation
+                    Console.WriteLine("Date Of Purchase - " + formatDateString(arrayData[0]));
+                    String[] truncated = arrayData[1].Split(' ');
+                    if (truncated.Length > 6)
                     {
-                        Console.WriteLine("Description - " + truncated[0] + " " + truncated[1] + " " + truncated[2] + " " + truncated[3] + " " + truncated[4] + " " + truncated[5] + "..."); 
+                        Console.WriteLine("Description - " + truncated[0] + " " + truncated[1] + " " + truncated[2] + " " + truncated[3] + " " + truncated[4] + " " + truncated[5] + "...");
                     }
                     else
                     {
-                        Console.WriteLine("Description - " + arrayData[1]);  //if its shorter just desplay everything
+                        Console.WriteLine("Description - " + arrayData[1]);
                     }
                 }
             }
             if (found == false)
             {
-                Console.WriteLine("Could not find your search term!"); //if the search term does not exist
+                Console.WriteLine("Could not find your search term!");
             }
 
             Console.WriteLine("---------------------------------");
@@ -230,33 +229,33 @@ namespace Project_Milestone
             Console.WriteLine("---------------------------------");
             Console.WriteLine("Modification");
             Console.WriteLine("Please enter the item number you wish to modify");
-            int itemNum = int.Parse(Console.ReadLine()) - 1; //enters a number then minus one so the number coresponds to the element in the array
+            int itemNum = int.Parse(Console.ReadLine()) - 1;
             while (itemNum > getCurTotal() - 1)
             {
-                Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal()); //display error message and tells the user how many elements there are
+                Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal());
                 itemNum = int.Parse(Console.ReadLine()) - 1;
             }
-            String[] itemModification = expenses[itemNum].Split('☺'); //splits the data into different strings so it can make more sence and be used as different sections
-            Console.WriteLine("You have selected Item Number - " + (itemNum + 1) + "\nThis is what it currently contains"); //displays data (the string is split into itemmodification)
+            String[] itemModification = expenses[itemNum].Split('☺');
+            Console.WriteLine("You have selected Item Number - " + (itemNum + 1) + "\nThis is what it currently contains");
             Console.WriteLine("Date Purchased - " + formatDateString(itemModification[0]));
             Console.WriteLine("Item Description - " + itemModification[1]);
             Console.WriteLine("Category - " + itemModification[2]);
             Console.WriteLine("Amount - R" + itemModification[3]);
             Console.WriteLine("\nPress Enter to disable modification of any data or any other key to edit the current data");
 
-            ConsoleKey key = Console.ReadKey().Key; //if the key the user pressed is enter
+            ConsoleKey key = Console.ReadKey().Key;
             Console.WriteLine();
-            if (key == ConsoleKey.Enter) //then do this
+            if (key == ConsoleKey.Enter)
             {
                 Console.WriteLine("Modification Disabled, No changes were made");
-            } //if its another key, then do the same we did when adding a new entry
+            }
             else
             {
                 Console.WriteLine();
                 Console.WriteLine("Modifications Enabled");
                 Console.WriteLine("Please fill in the updated infromation for item number " + (itemNum + 1));
 
-                String date = ""; //normal validation and adding
+                String date = "";
                 while (date.Length != 8) //validating the length of 8
                 {
                     Console.WriteLine("Please enter the purchase date in format YYYYMMDD (8 Characters)");
@@ -268,8 +267,8 @@ namespace Project_Milestone
                 String category = Console.ReadLine();
                 Console.WriteLine("What is the amount for this Expenditure or Item?");
                 String amount = Console.ReadLine();
-                expenses[itemNum] = date + "☺" + desc + "☺" + category + "☺" + amount; //adds the new value into expenses[the number we are replacing]
-                Console.WriteLine("Item Number " + (itemNum  + 1) + " has been updated");
+                expenses[itemNum] = date + "☺" + desc + "☺" + category + "☺" + amount;
+                Console.WriteLine("Item Number " + (itemNum + 1) + " has been updated");
             }
             Console.WriteLine("---------------------------------");
 
@@ -281,14 +280,14 @@ namespace Project_Milestone
             Console.WriteLine("---------------------------------");
             Console.WriteLine("Deletion");
             Console.WriteLine("Enter a item number that you want to delete");
-            int itemNum = int.Parse(Console.ReadLine()) - 1; //gets the number in the array - 1 to correspond to the element in the array
+            int itemNum = int.Parse(Console.ReadLine()) - 1;
             while (itemNum > getCurTotal() - 1)
             {
                 Console.WriteLine("Please enter a number within the range 1 - " + getCurTotal());
                 itemNum = int.Parse(Console.ReadLine()) - 1;
             }
-            expenses[itemNum] = null; //sets the value to null (deleting it)
-            expenses = reOrderArray(expenses); //uses a below method to move all the null values to the back
+            expenses[itemNum] = null;
+            expenses = reOrderArray(expenses);
             Console.WriteLine("Deletion Complete!");
             Console.WriteLine("---------------------------------");
 
@@ -299,33 +298,33 @@ namespace Project_Milestone
             //Sorting by description first then doing date after so description is on order
             Console.WriteLine("Sorting...");
 
-            //Sorting Descriptions //bubble sort for description
+            //Sorting Descriptions
             String temp;
             for (int i = 0; i < input.Length; i++)
             {
-               if(input[i] != null)
+                if (input[i] != null)
                 {
 
-                String[] splitI = input[i].Split('☺');
-                for (int j = i + 1; j < input.Length; j++)
-                {
-                    String[] splitJ = input[i].Split('☺');
-                    //[0] would be Date
-                    //[1] would be Description
-                    //[2] would be Category
-                    //[3] would be Amount
-                    if (splitI[1][0] > splitJ[1][0]) //gets the first letter of descrption so the words can be sorted aswell
+                    String[] splitI = input[i].Split('☺');
+                    for (int j = i + 1; j < input.Length; j++)
                     {
-                        temp = input[i];
-                        input[i] = input[j];
-                        input[j] = temp;
+                        String[] splitJ = input[i].Split('☺');
+                        //[0] would be Date
+                        //[1] would be Description
+                        //[2] would be Category
+                        //[3] would be Amount
+                        if (splitI[1][0] > splitJ[1][0]) //so the words can be sorted aswell
+                        {
+                            temp = input[i];
+                            input[i] = input[j];
+                            input[j] = temp;
+                        }
                     }
-                }
                 }
 
             }
 
-            //Sorting dates using bubble sort
+            //Sorting dates
 
             for (int i = 0; i < input.Length; i++)
             {
@@ -339,7 +338,7 @@ namespace Project_Milestone
                         //[1] would be Description
                         //[2] would be Category
                         //[3] would be Amount
-                        if (convertStringToDate(splitI[0]) > convertStringToDate(splitJ[0])) //tests if date is later than date
+                        if (convertStringToDate(splitI[0]) > convertStringToDate(splitJ[0]))
                         {
                             temp = input[i];
                             input[i] = input[j];
@@ -349,22 +348,22 @@ namespace Project_Milestone
                 }
             }
             Console.WriteLine("Sorting Complete");
-           
+
 
             return input;
         }
 
-        public static void normalizeDesctiptions() 
+        public static void normalizeDesctiptions()
         {
-            Console.WriteLine("Normalising..."); 
+            Console.WriteLine("Normalising...");
             for (int i = 0; i < getCurTotal(); i++)
             {
-                String[] split = expenses[i].Split('☺'); //Splits it into the seperate categories
-                String description = split[1]; //sets description accordingly
+                String[] split = expenses[i].Split('☺');
+                String description = split[1];
                 description = description.Trim(); //removing trail spaces
-                description = description.ToLower(); //lowers everything
-                description = FirstLetterToUpper(description); //usess below method to change the first letter to uppercase
-                expenses[i] = split[0] + "☺" + description + "☺" + split[2] + "☺" + split[3]; //adds it back to the array
+                description = description.ToLower();
+                description = FirstLetterToUpper(description);
+                expenses[i] = split[0] + "☺" + description + "☺" + split[2] + "☺" + split[3];
             }
             Console.WriteLine("Done Normalising");
 
@@ -372,13 +371,13 @@ namespace Project_Milestone
 
 
         //extra methods to help with existing methods
-        public static string FirstLetterToUpper(string s) //algorithm to conver the first letter to uppercase
+        public static string FirstLetterToUpper(string s)
         {
-            if (string.IsNullOrEmpty(s))  //if the string does not exist
+            if (string.IsNullOrEmpty(s))
             {
                 return string.Empty;
             }
-            return char.ToUpper(s[0]) + s.Substring(1); //returns the first letter to uppercase and then the rest of the string
+            return char.ToUpper(s[0]) + s.Substring(1);
         }
 
         public static DateTime convertStringToDate(String date)
@@ -388,7 +387,7 @@ namespace Project_Milestone
             String month = date.Substring(4, 2);
             String day = date.Substring(6, 2);
             DateTime dt = DateTime.ParseExact(day + "/" + month + "/" + year, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            return dt; //splits the date into a DateTime format
+            return dt;
         }
         public static String formatDateString(String date)
         {
@@ -398,32 +397,32 @@ namespace Project_Milestone
             String month = date.Substring(4, 2);
             String day = date.Substring(6, 2);
 
-            return day + "/" + month + "/" + year; //splits into readable format 
+            return day + "/" + month + "/" + year;
 
         }
         public static string get2Decimal(String input)
         {
             char[] sInput = input.ToCharArray();
             bool hasDec = false;
-            String smartS = ""; //smartS is a string containing the final value that we will return
+            String smartS = "";
             for (int i = 0; i < sInput.Length; i++)
             {
                 if (sInput[i] == '.' || sInput[i] == ',')
                 {
-                    smartS += sInput[i]; 
+                    smartS += sInput[i];
                     smartS += sInput[i + 1];
                     smartS += sInput[i + 2];
-                    hasDec = true; //if there is a decimal, stop and add the next 2 characters
+                    hasDec = true;
                     break;
                 }
                 else
                 {
-                    smartS += sInput[i]; //keeps adding to the array untill it gets a decimal
+                    smartS += sInput[i];
                 }
             }
             if (hasDec == false)
             {
-                smartS += ".00"; //if there is no decimal, add .00
+                smartS += ".00";
             }
             return smartS;
         }
@@ -435,20 +434,15 @@ namespace Project_Milestone
         }
         public static String[] reOrderArray(String[] input)
         {
-<<<<<<< HEAD
             List<String> temp = new List<String>();
             temp = input.ToList();
-=======
-            List<String> temp = new List<String>(); 
-            temp = input.ToList(); //adds the input string to a list
->>>>>>> c7ef1d1668458c0c1b5cf90f965cf2c2127ad690
             for (int i = 0; i < temp.Count; i++)
             {
-                input[i] = temp[i]; //adds all values that are not null back into the array
+                input[i] = temp[i];
             }
             for (int i = temp.Count; i < input.Length; i++)
             {
-                input[i] = null; //adds everything else as null again
+                input[i] = null;
             }
             return input;
         }
@@ -456,42 +450,4 @@ namespace Project_Milestone
     }
 }
 
-<<<<<<< HEAD
-///End oF Project
-=======
-/* Question Contents
-Maggie’s family loves shopping and earning Smart Shopper’s points. They earn points when they buy
-any item at selected local stores. As a developer see how they can backup and record their purchases
-into a Household Account system to keep track of their expenditures.
-Milestone 1 - Planning
-In the first milestone, you are required to plan out exactly how you will provide a solution for the
-required. Below its set of prerequisites for implementing all the requirements of this project.
-The system should be able to store up to 10000 costs and revenues. For each
-expense it should be allowed to save the following information:
-• Date (8 characters: YYYYMMDD format) of purchase
-• Description of expenditure or item
-• Category
-• Amount
-Using a menu allowing the user to perform the following operations:
-1 - Add a new expense. This option allows the user to capture the purchase date (date: YYYYMMDD
-format), the description of the item purchased and the category of an item.
-2 - Show all expenses. This option allows the user to specify the category (e.g. devices), a period in
-terms of start date and end date when the purchase is made for that category. Finally display the
-summary as item number, date (format DD / MM / YYYY) description, a category in parentheses,
-and amount to two decimal places, all in the same line, separated by hyphens. At the end of all the
-data show the total amount of data displayed.
-3 – Search item. This option allows the user to specify the description or category without
-distinguishing case sensitive or not). Finally, the summary is displayed as item number, the date of
-purchase and item description (the description is displayed in the sixth truncated blank, if any
-spaces six or more).
-4 - Modify item. This option allows the user to specify the item by its number, and show the
-previous value of each field (date purchased, item description, category and amount) and display
-the message “press Enter to disable modification of any data” otherwise allow the user to make
-necessary modifications to the item description, category, date and amount of purchase.
-5 - Delete item. This option allows the user to capture the item number and clear the item from
-the history of the record. Be advised that every time item is removed from the list, the list is reordered.
-6 - Sort items alphabetically. This option sort the items in the list by date (if matched) description.
-7 - Normalize descriptions: remove trailing spaces, If a description is all
-uppercase, will be converted to lowercase (except for the first letter, kept in uppercase). 
- */
->>>>>>> c7ef1d1668458c0c1b5cf90f965cf2c2127ad690
+
